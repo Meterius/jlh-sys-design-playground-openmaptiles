@@ -11,7 +11,10 @@ networks:
 services:
 
   postgres:
+    container_name: openmaptiles_postgres
     image: "${POSTGIS_IMAGE:-openmaptiles/postgis}:${TOOLS_VERSION}"
+    command: postgres -c jit="off"
+    shm_size: 512m
     # Use "command: postgres -c jit=off" for PostgreSQL 11+ because of slow large MVT query processing
     # Use "shm_size: 512m" if you want to prevent a possible 'No space left on device' during 'make generate-tiles-pg'
     volumes:
