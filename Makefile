@@ -67,6 +67,9 @@ endif
 # Set OpenMapTiles host
 export OMT_HOST := http://$(firstword $(subst :, ,$(subst tcp://,,$(DOCKER_HOST))) localhost)
 
+# Image for pmtile generation
+PMTILES_IMAGE := protomaps/go-pmtiles:v1.30.2
+
 # This defines an easy $(newline) value to act as a "\n". Make sure to keep exactly two empty lines after newline.
 define newline
 
@@ -474,6 +477,17 @@ generate-tiles-pg: all start-db
 	@echo "Updating generated tile metadata ..."
 	$(DOCKER_COMPOSE) run $(DC_OPTS) openmaptiles-tools \
 			mbtiles-tools meta-generate "$(MBTILES_LOCAL_FILE)" $(TILESET_FILE) --auto-minmax --show-ranges
+
+.PHONY: generate-pmtiles-from-mbtiles
+generate-pmtiles-from-mbtiles: data/tiles.pmtiles
+
+data/tiles.pmtiles: data/tiles.mbtiles
+	mkdir -p data/.pmtiles-tmp
+	docker run --rm \
+		-v "$(CURDIR)/data:/data" \
+		$(PMTILES_IMAGE) \
+		convert --tmpdir /data/.pmtiles-tmp /data/tiles.mbtiles /data/tiles.pmtiles
+
 
 .PHONY: data/tiles.txt
 data/tiles.txt:

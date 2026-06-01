@@ -170,6 +170,9 @@ Instead of calling `make download area=albania` you can add a .osm.pbf file in t
 
 To change the name of the output filename, you can modify the variable `MBTILES_FILE` in the `.env` file or set up the environment variable `MBTILES_FILE` before running `./quickstart.sh` or `make generate-tiles-pg` (e.g., `MBTILES_FILENAME=monaco.mbtiles ./quickstart.sh monaco`).
 
+### PMTiles
+
+To generate `data/tiles.pmtiles` from the `data/tiles.mbtiles` file, run: `make generate-pmtiles-from-mbtiles`.
 
 ## License
 
