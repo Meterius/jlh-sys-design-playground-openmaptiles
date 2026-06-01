@@ -7,7 +7,7 @@
     }
   },
   "styles": {
-    "OSM OpenMapTiles": {
+    "omt_default": {
       "style": "style.json",
       "tilejson": {
         "type": "overlay"

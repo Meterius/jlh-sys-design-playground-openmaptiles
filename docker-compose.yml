@@ -59,6 +59,7 @@ services:
       PGPASSWORD: ${PGPASSWORD:-openmaptiles}
       PGPORT: ${PGPORT:-5432}
       MBTILES_FILE: ${MBTILES_FILE}
+      USE_KEY_COLUMN: ${USE_KEY_COLUMN:-false}
     networks:
       - postgres
     volumes:
